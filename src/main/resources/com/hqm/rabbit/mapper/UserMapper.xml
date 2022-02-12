@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hqm.rabbit.mapper.UserMapper">
+
+    <resultMap type="com.hqm.rabbit.domain.vo.SysUser" id="UserVoResult">
+        <id     property="id"      column="id"      />
+        <id     property="username"      column="username"      />
+        <id     property="password"      column="password"      />
+    </resultMap>
+
+
+    <select id="selectUserVo"   resultType="com.hqm.rabbit.domain.vo.SysUser">
+        select * from sys_user
+    </select>
+    <insert id="inserUser"  parameterType="List">
+        insert into sys_user(username,password) values
+        <foreach collection="sysUserList" item="sysuser" separator=",">
+        (#{sysuser.username},#{sysuser.password})
+        </foreach>
+    </insert>
+<!--    <select id="selectLogin" resultType="HashMap">-->
+<!--        select * from sys_user-->
+<!--    </select>-->
+<!--    <select id="selecttongyong" parameterType="String" resultType="HashMap">-->
+<!--         ${str}-->
+<!--    </select>-->
+
+
+</mapper>

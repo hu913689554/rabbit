@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hqm.rabbit.mapper.GetDatabaseMapper">
+
+
+    <select id="gettable" parameterType="String" resultType="HashMap">
+        SELECT
+        table_name AS '表名',
+        table_comment AS '备注'
+        FROM information_schema.tables WHERE table_schema=#{database};
+    </select>
+    <select id="getcolumn"  parameterType="String" resultType="HashMap">
+        SELECT
+    TABLE_SCHEMA AS '库名',
+    TABLE_NAME AS '表名',
+    COLUMN_NAME AS '列名',
+    ORDINAL_POSITION AS '列的排列顺序',
+    COLUMN_DEFAULT AS '默认值',
+    IS_NULLABLE AS '是否为空',
+    DATA_TYPE AS '数据类型',
+    CHARACTER_MAXIMUM_LENGTH AS '字符最大长度',
+    NUMERIC_PRECISION AS '数值精度(最大位数)',
+    NUMERIC_SCALE AS '小数精度',
+    COLUMN_TYPE AS 列类型,
+    COLUMN_KEY 'KEY',
+    EXTRA AS '额外说明',
+    COLUMN_COMMENT AS '注释'
+FROM
+    information_schema.COLUMNS
+WHERE
+    TABLE_NAME = #{table}
+    AND
+    TABLE_SCHEMA = #{database}
+
+ORDER BY
+    TABLE_NAME,
+    ORDINAL_POSITION;
+    </select>
+    <select id="execut"  parameterType="String" resultType="HashMap">
+        ${sql}
+    </select>
+    <!--    <select id="selectLogin" resultType="HashMap">-->
+    <!--        select * from sys_user-->
+    <!--    </select>-->
+    <!--    <select id="selecttongyong" parameterType="String" resultType="HashMap">-->
+    <!--         ${str}-->
+    <!--    </select>-->
+
+
+</mapper>
