@@ -1,6 +1,7 @@
 package com.hqm.rabbit.utils.security;
 
 import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.utils.error.MsgException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Service("ss")
 public class PermissionService {
 
-    public Boolean hasPermi( String permission){
+    public Boolean hasPermi ( String permission) throws MsgException {
         System.out.print("开始认证");
         if(permission==null||"".equals(permission)){
             return true;
@@ -28,7 +29,9 @@ public class PermissionService {
         if(permissions.contains(permission)){
             return true;
         }else{
-            return false;
+            //throw  new MsgException("权限验证失败！");
+           return false;
         }
+
     }
 }

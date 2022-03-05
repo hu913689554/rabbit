@@ -40,9 +40,9 @@ public class MenuController {
      * 创建时间 2022/1/10 15:44
      * 方法作用 增加菜单
      */
-    @PostMapping("/insertmenu")
+    @PostMapping("/getUserRoutes")
     //@PreAuthorize("@ss.hasPermi(\"p12\")")
-    public AjaxResult insertmenu(SysMuen sysMuen) {
+    public AjaxResult getUserRoutes(SysMuen sysMuen) {
         System.out.println("sysMuen:" + sysMuen);
         return new AjaxResult(1, "菜单查询完成");
     }

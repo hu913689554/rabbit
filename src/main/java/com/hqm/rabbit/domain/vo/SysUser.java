@@ -42,6 +42,20 @@ public class SysUser implements UserDetails {
      * 用户对应token
      */
     private String token;
+
+    /**
+     * 用户页面
+     */
+    private Set<String> pagePath;
+
+    public Set<String> getRagePath() {
+        return pagePath;
+    }
+
+    public void setRagePath(Set<String> pagePath) {
+        this.pagePath = pagePath;
+    }
+
     /**
      * 用户权限
      */

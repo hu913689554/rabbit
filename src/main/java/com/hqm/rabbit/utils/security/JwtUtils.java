@@ -153,7 +153,7 @@ public class JwtUtils {
             Claims claims = gettoekntoclaims(token);
             return (SysUser) redisTemplate.opsForValue().get("id" + claims.get("username"));
         } catch (Exception e) {
-            throw new RuntimeException("登录已经过期请重新登录");
+            throw new RuntimeException("未获取到登录信息,请重新登录");
         }
     }
 

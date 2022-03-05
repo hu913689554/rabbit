@@ -43,19 +43,21 @@ public class    LoginController {
      */
     @PostMapping("/postLogin")
     public AjaxResult login(@RequestBody SysUser UserVo) {
+        System.out.println("开始登录");
         if(UserVo.getUsername()==null|| UserVo.getPassword() == null) {
             return new AjaxResult(0, "账号或密码不能为空");
         }
         String token=loginService.login(UserVo);
         HashMap<String, String> stringStringHashMap = new HashMap<String, String>();
         stringStringHashMap.put("token",token);
+        System.out.println("token返回成功"+token);
         return AjaxResult.success("token生成成功",stringStringHashMap);
     }
 
 
-    @PostMapping("/userinfo")
-    public AjaxResult userinfo(String token) {
-        System.out.println("token获取用户信息");
+    @PostMapping("/getinfo")
+    public AjaxResult getinfo(@RequestParam String token) {
+        System.out.println("token获取用户信息"+token);
         SysUser userVo = jwtUtils.getTokentoUserVO(token);
         return AjaxResult.success("token生成成功",userVo);
     }

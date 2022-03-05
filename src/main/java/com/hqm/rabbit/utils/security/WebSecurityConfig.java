@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //开启授权请求
                 .authorizeRequests()
                 //放行接口，因为使用自定义登录页面所以需要放行
-                .antMatchers("/**/postLogin","/**/swagger-ui/**/","/**/doc.html","/swagger-ui.html").permitAll()
+                .antMatchers("/**/userinfo","/**/postLogin","/**/swagger-ui/**/","/**/doc.html","/swagger-ui.html").permitAll()
                 //设置页面权限
                 //.antMatchers("/menuLogin").hasAuthority("p2")
                 //拦截所有请求，所有请求都需要登录认证

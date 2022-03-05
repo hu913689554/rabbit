@@ -50,7 +50,6 @@ public class LoginService implements UserDetailsService {
         catch (Exception e)
         {
             throw new RuntimeException("账号或密码错误");
-
         }
         //SysUser loginUser = (SysUser) authentication.getPrincipal();
         return jwtutils.createToken(UserVo);
@@ -59,6 +58,7 @@ public class LoginService implements UserDetailsService {
     //根据账号查询账号信息
    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(username);
        SysUser userVo = SysLoginMapper.selectLogininfo(username);
        List<Map<String, String>> list = SysLoginMapper.selectUserFun(username);
        Set<String> set=new HashSet();
