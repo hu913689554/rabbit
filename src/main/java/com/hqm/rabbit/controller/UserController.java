@@ -3,7 +3,7 @@ package com.hqm.rabbit.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.service.UserService;
 import com.hqm.rabbit.utils.responsemsg.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,16 @@ public class UserController {
     @GetMapping("/getuser")
     public AjaxResult getUser(int pageNum,int pagesize){
         PageHelper.startPage(pageNum,pagesize);
-        List<SysUser> sysUsers = UserService.selectUserVo();
+        List<SysUserVo> sysUsers = UserService.selectUserVo();
         PageInfo pageInfo = new PageInfo(sysUsers);
         return new AjaxResult(1,"用户查询成功",pageInfo);
     }
 
     @PostMapping("/inseruser")
     public AjaxResult inserUser(){
-        List<SysUser> list=new ArrayList();
+        List<SysUserVo> list=new ArrayList();
         for (int i=2000;i<2500;i++){
-            SysUser sysUser = new SysUser();
+            SysUserVo sysUser = new SysUserVo();
             sysUser.setUsername(i+"");
             sysUser.setPassword("aaaaaaaaaaa");
             list.add(sysUser);

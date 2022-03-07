@@ -3,7 +3,7 @@ package com.hqm.rabbit.utils.security;
 
 import javax.servlet.FilterChain;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,13 +43,13 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("请求地址："+httpServletRequest.getRequestURI());
-//        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
-//        while (parameterNames.hasMoreElements()){
-//            System.out.println("请求参数："+parameterNames.nextElement()+":"+httpServletRequest.getParameter(parameterNames.nextElement()));
-//        }
+        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+        while (parameterNames.hasMoreElements()){
+            System.out.println("请求参数："+parameterNames.nextElement()+":"+httpServletRequest.getParameter(parameterNames.nextElement()));
+        }
+        System.out.println("开始验证");
 
-
-        SysUser userVo = jwtUtils.getToken(httpServletRequest);
+        SysUserVo userVo = jwtUtils.getToken(httpServletRequest);
         if(userVo!=null){
             //刷新令牌
             jwtUtils.verifyToken(userVo);
@@ -63,7 +63,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                         .getContext()
                         .setAuthentication(new UsernamePasswordAuthenticationToken(userVo.getUsername(), userVo.getPassword()));
             }catch (Exception e){
-                System.out.println("错误了");
+                throw new RuntimeException("用户未登录");
             }
         }
         //将请求转发给过滤器链下一个filter

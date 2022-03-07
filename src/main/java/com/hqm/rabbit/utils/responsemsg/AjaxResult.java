@@ -46,12 +46,16 @@ public class AjaxResult {
     public static AjaxResult success( String msg, Object data){
         return new AjaxResult(1,msg,data);
     }
+    public static AjaxResult success(String msg){
+        return new AjaxResult(1,msg);
+    }
     @Override
     public String toString() {
-        return "AjaxResult{" +
+        return "{" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
                 '}';
     }
 }
+

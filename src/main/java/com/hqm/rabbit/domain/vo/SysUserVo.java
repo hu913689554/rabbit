@@ -1,5 +1,6 @@
 package com.hqm.rabbit.domain.vo;
 
+import com.hqm.rabbit.domain.entity.SysUser;
 import com.hqm.rabbit.utils.common.annotation.Excel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,21 +16,10 @@ import java.util.stream.Collectors;
  * @时间 2022-01-05 16:49
  * @版本 1.0
  */
-public class SysUser implements UserDetails {
-    /**
-     * 用户唯一标识
-     */
-    public String Id;
-    /**
-     * 用户账号
-     */
-    @Excel
-    public String username;
-    /**
-     * 用户密码
-     */
-    @Excel
-    public String password;
+public class SysUserVo extends SysUser implements UserDetails {
+
+
+
     /**
      * 登录时间
      */
@@ -69,31 +59,17 @@ public class SysUser implements UserDetails {
         this.permissions = permissions;
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
 
     @Override
     public String getUsername() {
-        return username;
+        return super.getUsername();
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
-    }
-
-    public void setPassword(String password) { this.password = password; }
 
     @Override
     public String getPassword() {
-        return password;
+        return super.getPassword();
     }
-
-
 
 
 
@@ -178,9 +154,9 @@ public class SysUser implements UserDetails {
     @Override
     public String toString() {
         return "UserVo{" +
-                "Id='" + Id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                "Id='" + super.getId() + '\'' +
+                ", username='" + this.getUsername() + '\'' +
+                ", password='" + this.getPassword() + '\'' +
                 ", loginTime=" + loginTime +
                 ", expireTime=" + expireTime +
                 ", token='" + token + '\'' +

@@ -1,6 +1,6 @@
 package com.hqm.rabbit.controller;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.service.GetDatabaseService;
 import com.hqm.rabbit.utils.common.annotation.Excel;
 import com.hqm.rabbit.utils.common.utils.poi.ExcelUtil;
@@ -64,8 +64,8 @@ public class   GetDatabaseController {
     @GetMapping("/getUser")
     //@PreAuthorize("@ss.hasPermi(\"admin\")")
     public AjaxResult getUser() {
-        List<SysUser> user = GetDatabaseService.getUser();
-        ExcelUtil excelUtil = new ExcelUtil(SysUser.class);
+        List<SysUserVo> user = GetDatabaseService.getUser();
+        ExcelUtil excelUtil = new ExcelUtil(SysUserVo.class);
         excelUtil.init(user,"测试页","测试标题", Excel.Type.EXPORT);
         final com.hqm.rabbit.utils.common.core.domain.AjaxResult ajaxResult = excelUtil.exportExcel();
         System.out.println(ajaxResult);

@@ -1,7 +1,8 @@
 package com.hqm.rabbit.controller;
 
+import com.hqm.rabbit.domain.entity.SysUser;
 import com.hqm.rabbit.utils.security.JwtUtils;
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.service.LoginService;
 import com.hqm.rabbit.utils.responsemsg.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/system/post")
-public class    LoginController {
+public class     LoginController {
     @Autowired
     private JwtUtils jwtutils;
 
@@ -30,8 +31,8 @@ public class    LoginController {
     public LoginService loginService;
 
     @RequestMapping("/getLogin")
-    public String getLogin(String name) {
-        return "请求成功" + name;
+    public AjaxResult getLogin() {
+        return AjaxResult.success("请求成功");
     }
 
     @Autowired
@@ -42,7 +43,7 @@ public class    LoginController {
      * 方法作用 登陆验证并验证存储信息
      */
     @PostMapping("/postLogin")
-    public AjaxResult login(@RequestBody SysUser UserVo) {
+    public AjaxResult postLogin(@RequestBody SysUserVo UserVo) {
         System.out.println("开始登录");
         if(UserVo.getUsername()==null|| UserVo.getPassword() == null) {
             return new AjaxResult(0, "账号或密码不能为空");
@@ -58,7 +59,7 @@ public class    LoginController {
     @PostMapping("/getinfo")
     public AjaxResult getinfo(@RequestParam String token) {
         System.out.println("token获取用户信息"+token);
-        SysUser userVo = jwtUtils.getTokentoUserVO(token);
+        SysUserVo userVo = jwtUtils.getTokentoUserVO(token);
         return AjaxResult.success("token生成成功",userVo);
     }
 }

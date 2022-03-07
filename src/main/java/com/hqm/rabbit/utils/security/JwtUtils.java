@@ -1,6 +1,6 @@
 package com.hqm.rabbit.utils.security;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -70,7 +70,7 @@ public class JwtUtils {
      * @param uservo
      * @return
      */
-    public String createToken(SysUser uservo) {
+    public String createToken(SysUserVo uservo) {
         if (uservo.getUsername() == null || uservo.getPassword() == null) {
             return null;
         }
@@ -89,10 +89,10 @@ public class JwtUtils {
      *
      * @param uservo 登录信息
      */
-    public void refreshToken(SysUser uservo) {
+    public void refreshToken(SysUserVo uservo) {
         uservo.setLoginTime(System.currentTimeMillis());
         uservo.setExpireTime(uservo.getLoginTime() + expireTime * MILLIS_MINUTE);
-        redisTemplate.opsForValue().set("id" + uservo.getUsername(), uservo,expireTime, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("id" + uservo.getUsername(), uservo, expireTime, TimeUnit.MINUTES);
         System.out.println("redis已经刷新");
     }
 
@@ -102,7 +102,7 @@ public class JwtUtils {
      * @param uservo
      * @return 令牌
      */
-    public void verifyToken(SysUser uservo) {
+    public void verifyToken(SysUserVo uservo) {
         long expireTime = uservo.getExpireTime();
         long currentTime = System.currentTimeMillis();
         if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
@@ -133,7 +133,7 @@ public class JwtUtils {
      * 作用 通过请求获取token
      * 版本 1.0
      */
-    public SysUser getToken(HttpServletRequest request) {
+    public SysUserVo getToken(HttpServletRequest request) {
         String token = request.getHeader(header);
         if (token != null && !"".equals(token)) {
             return getTokentoUserVO(token);
@@ -148,10 +148,14 @@ public class JwtUtils {
      * 作用 通过token获取对象
      * 版本 1.0
      */
-    public SysUser getTokentoUserVO(String token) {
+    public SysUserVo getTokentoUserVO(String token) {
         try {
             Claims claims = gettoekntoclaims(token);
-            return (SysUser) redisTemplate.opsForValue().get("id" + claims.get("username"));
+            Object username = redisTemplate.opsForValue().get("id" + claims.get("username"));
+            System.out.println("开始打印");
+            System.out.println(username);
+            return (SysUserVo)username;
+
         } catch (Exception e) {
             throw new RuntimeException("未获取到登录信息,请重新登录");
         }

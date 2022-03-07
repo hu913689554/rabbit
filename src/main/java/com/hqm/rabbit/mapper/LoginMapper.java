@@ -1,6 +1,6 @@
 package com.hqm.rabbit.mapper;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public interface LoginMapper {
      * 创建时间 2022/1/10 22:10
      * 方法作用 查询返回登陆信息 传入多个参数
      */
-    public SysUser selectLogininfo(String username);
+    public SysUserVo selectLogininfo(String username);
 
-    public List<SysUser> selectUserVo();
+    public List<SysUserVo> selectUserVo();
 
     /**
      * 创建人 胡勤明

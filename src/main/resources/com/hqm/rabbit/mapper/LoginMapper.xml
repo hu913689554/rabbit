@@ -4,16 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hqm.rabbit.mapper.LoginMapper">
 
-    <resultMap type="com.hqm.rabbit.domain.vo.SysUser" id="UserVoResult">
+    <resultMap type="com.hqm.rabbit.domain.vo.SysUserVo" id="UserVoResult">
         <id     property="id"      column="id"      />
         <id     property="username"      column="username"      />
         <id     property="password"      column="password"      />
     </resultMap>
 
-    <select id="selectLogininfo"  parameterType="String" resultType="com.hqm.rabbit.domain.vo.SysUser">
+    <select id="selectLogininfo"  parameterType="String" resultType="com.hqm.rabbit.domain.vo.SysUserVo">
         select * from sys_user where username=#{username}
     </select>
-    <select id="selectUserVo"   resultType="com.hqm.rabbit.domain.vo.SysUser">
+    <select id="selectUserVo"   resultType="com.hqm.rabbit.domain.vo.SysUserVo">
         select * from sys_user
     </select>
     <select id="selectUserFun"   parameterType="String" resultType="HashMap" >

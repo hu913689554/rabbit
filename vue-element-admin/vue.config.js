@@ -37,15 +37,16 @@ module.exports = {
       errors: true
     },
     proxy: {
-      'vi/three_group/week_external_bugs': {
-        target: 'http://qa.demo.dev.web.nd',
+      '/rabbit': {
+        target: 'http://127.0.0.1:8081/',
         changeOrigin:true,
         pathRewrite:{
-          ['^'+process.env.VUE_APP_BASE_API]:''
+          ['^'+process.env.VUE_APP_BASE_API+'/rabbit']:'',
+         ['^'+process.env.VUE_APP_BASE_API]:''
         }
       }
     },
-    //before: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

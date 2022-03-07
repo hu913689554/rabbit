@@ -27,7 +27,6 @@ public class GlobalExceptionHandler
     @ExceptionHandler(RuntimeException.class)
     public AjaxResult handleRuntimeException(RuntimeException e, HttpServletRequest request)
     {
-        System.out.println("-------未知异常----------"+e.getMessage());
         String requestURI = request.getRequestURI();
         return AjaxResult.error(e.getMessage());
     }
@@ -38,7 +37,6 @@ public class GlobalExceptionHandler
     @ExceptionHandler(MsgException.class)
     public AjaxResult Exception403(MsgException e, HttpServletRequest request)
     {
-        System.out.println("-------未知异常11----------"+e.getMessage());
         String requestURI = request.getRequestURI();
         return AjaxResult.error(e.getMessage());
     }
@@ -49,7 +47,6 @@ public class GlobalExceptionHandler
     @ExceptionHandler(Exception.class)
     public AjaxResult handleException(Exception e, HttpServletRequest request)
     {
-        System.out.println("-------系统异常----------");
         String requestURI = request.getRequestURI();
         return AjaxResult.error(e.getMessage());
     }

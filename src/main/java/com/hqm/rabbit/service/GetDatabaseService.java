@@ -1,7 +1,7 @@
 package com.hqm.rabbit.service;
 
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.mapper.GetDatabaseMapper;
 import com.hqm.rabbit.mapper.LoginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class GetDatabaseService {
         List<HashMap<String, String>> getcolumn = systemMapper.getcolumn(database,table);
         return getcolumn;
     }
-    public List<SysUser> getUser(){
+    public List<SysUserVo> getUser(){
         return SysLoginMapper.selectUserVo();
     }
     public List<HashMap<String, String>> select(String sql){

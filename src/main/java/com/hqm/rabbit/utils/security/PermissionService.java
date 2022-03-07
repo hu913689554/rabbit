@@ -1,6 +1,6 @@
 package com.hqm.rabbit.utils.security;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.utils.error.MsgException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class PermissionService {
         if("admin".equals(permission)){
             return true;
         }
-        SysUser Uservo = (SysUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SysUserVo Uservo = (SysUserVo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<String> permissions = Uservo.getPermissions();
         System.out.println("认证获取的结果"+permissions);
         if(permissions.contains(permission)){

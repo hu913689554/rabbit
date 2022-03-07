@@ -1,6 +1,6 @@
 package com.hqm.rabbit.service;
 
-import com.hqm.rabbit.domain.vo.SysUser;
+import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +20,12 @@ public class UserService {
     UserMapper UserMapper;
 
 
-    public List<SysUser> selectUserVo(){
-        List<SysUser> sysUsers = UserMapper.selectUserVo();
+    public List<SysUserVo> selectUserVo(){
+        List<SysUserVo> sysUsers = UserMapper.selectUserVo();
         return sysUsers;
     }
 
-    public int insertUser(List<SysUser> sysUserList){
+    public int insertUser(List<SysUserVo> sysUserList){
         int i = UserMapper.inserUser(sysUserList);
         return i;
     }
