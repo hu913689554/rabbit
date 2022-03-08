@@ -33,6 +33,8 @@ export default {
     ]),
     activeMenu() {
       const route = this.$route
+      console.log("--------------------------打印")
+      console.log(route)
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
@@ -52,3 +54,5 @@ export default {
   }
 }
 </script>
+
+

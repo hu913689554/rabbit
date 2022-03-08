@@ -30,4 +30,11 @@ public interface LoginMapper {
      */
     public List<Map<String,String>> selectUserFun(String username);
 
+    /**
+     * 创建人 胡勤明
+     * 创建时间 2022/03/08 10:44
+     * 方法作用 角色查询
+     */
+    public List<Map<String,String>> selectUserRole(String username);
+
 }

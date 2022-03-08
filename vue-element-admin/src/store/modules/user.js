@@ -34,8 +34,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        console.log(response)
-        const { data } = response.data
+        const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -50,16 +49,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('getInfo:验证失败，请重新登录。')
         }
 
         const { roles, name, avatar, introduction } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+          reject('getInfo:角色必须是非空数组！')
         }
 
         commit('SET_ROLES', roles)

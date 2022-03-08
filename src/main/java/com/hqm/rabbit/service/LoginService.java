@@ -50,24 +50,32 @@ public class LoginService implements UserDetailsService {
         {
             throw new RuntimeException("账号或密码错误");
         }
-        //SysUser loginUser = (SysUser) authentication.getPrincipal();
-        return jwtutils.createToken(UserVo);
+        SysUserVo loginUser = (SysUserVo) authentication.getPrincipal();
+        System.out.println("登录返回"+loginUser);
+        return jwtutils.createToken(loginUser);
     }
 
     //根据账号查询账号信息
    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        System.out.println("账号查询验证");
-        System.out.println(username);
+       System.out.println(username);
        SysUserVo userVo = SysLoginMapper.selectLogininfo(username);
-       List<Map<String, String>> list = SysLoginMapper.selectUserFun(username);
-       Set<String> set=new HashSet();
-       for(Map map:list){
-           set.add(map.get("funcode").toString());
+       List<Map<String, String>> listFun = SysLoginMapper.selectUserFun(username);
+       List<Map<String, String>> listRole = SysLoginMapper.selectUserRole(username);
+       Set<String> setFuns=new HashSet();
+       for(Map map:listFun){
+           setFuns.add(map.get("funcode").toString());
+       }
+       Set<String> setRoles=new HashSet();
+       for(Map map:listRole){
+           setRoles.add(map.get("rolecode").toString());
        }
        //maps.stream().map(Map::values).collect(Collectors.toList());
-       System.out.println("权限：：：：：："+set);
-       userVo.setPermissions(set);
+       System.out.println("权限：：：：：："+setFuns);
+       System.out.println("权限：：：：：："+setRoles);
+       userVo.setPermissions(setFuns);
+       userVo.setRoles(setRoles);
        return userVo;
     }
 }

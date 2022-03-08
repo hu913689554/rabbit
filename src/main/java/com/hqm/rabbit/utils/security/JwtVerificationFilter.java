@@ -1,11 +1,14 @@
 package com.hqm.rabbit.utils.security;
 
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -40,29 +43,28 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Autowired
     JwtUtils jwtUtils;
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("请求地址："+httpServletRequest.getRequestURI());
-        Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
-        while (parameterNames.hasMoreElements()){
-            System.out.println("请求参数："+parameterNames.nextElement()+":"+httpServletRequest.getParameter(parameterNames.nextElement()));
-        }
-        System.out.println("开始验证");
+        System.out.println("过滤开始");
 
         SysUserVo userVo = jwtUtils.getToken(httpServletRequest);
-        if(userVo!=null){
-            //刷新令牌
-            jwtUtils.verifyToken(userVo);
+        if (userVo != null) {
+
             try {
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userVo, null, userVo.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(userVo, null, userVo.getAuthorities());
+
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(new UsernamePasswordAuthenticationToken(userVo.getUsername(), userVo.getPassword()));
-            }catch (Exception e){
+
+//                SecurityContextHolder
+//                        .getContext()
+//                        .setAuthentication(new UsernamePasswordAuthenticationToken(userVo.getUsername(), userVo.getPassword()));
+                //刷新令牌
+                jwtUtils.verifyToken(userVo);
+            } catch (Exception e) {
                 throw new RuntimeException("用户未登录");
             }
         }

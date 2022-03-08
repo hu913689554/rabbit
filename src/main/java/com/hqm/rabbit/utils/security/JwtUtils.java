@@ -152,10 +152,7 @@ public class JwtUtils {
         try {
             Claims claims = gettoekntoclaims(token);
             Object username = redisTemplate.opsForValue().get("id" + claims.get("username"));
-            System.out.println("开始打印");
-            System.out.println(username);
             return (SysUserVo)username;
-
         } catch (Exception e) {
             throw new RuntimeException("未获取到登录信息,请重新登录");
         }

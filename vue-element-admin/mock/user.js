@@ -8,7 +8,7 @@ const tokens = {
   }
 }
 
-const users = {
+const  users = {
   'admin-token': {
     roles: ['admin'],
     introduction: 'I am a super administrator',

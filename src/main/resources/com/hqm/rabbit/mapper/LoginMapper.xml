@@ -23,6 +23,9 @@
         union
         select b.funcode from sys_user_role a inner join sys_role_fun b on a.rolecode=b.rolecode where a.username=#{username}
     </select>
+    <select id="selectUserRole"   parameterType="String" resultType="HashMap" >
+        select rolecode from sys_user_role where username=#{username}
+    </select>
 <!--    <select id="selectLogin" resultType="HashMap">-->
 <!--        select * from sys_user-->
 <!--    </select>-->

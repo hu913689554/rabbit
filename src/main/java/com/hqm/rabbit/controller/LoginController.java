@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @作者 胡勤明
@@ -42,11 +44,13 @@ public class     LoginController {
      * 创建时间 2022/1/10 15:44
      * 方法作用 登陆验证并验证存储信息
      */
-    @PostMapping("/postLogin")
+    //@PostMapping("/postLogin")
+    @ResponseBody
+    @RequestMapping( value = "/postLogin" ,method = RequestMethod.POST)
     public AjaxResult postLogin(@RequestBody SysUserVo UserVo) {
-        System.out.println("开始登录");
+        System.out.println("开始登录"+UserVo);
         if(UserVo.getUsername()==null|| UserVo.getPassword() == null) {
-            return new AjaxResult(0, "账号或密码不能为空");
+            return AjaxResult.error("账号或密码不能为空");
         }
         String token=loginService.login(UserVo);
         HashMap<String, String> stringStringHashMap = new HashMap<String, String>();
@@ -57,9 +61,9 @@ public class     LoginController {
 
 
     @PostMapping("/getinfo")
-    public AjaxResult getinfo(@RequestParam String token) {
-        System.out.println("token获取用户信息"+token);
-        SysUserVo userVo = jwtUtils.getTokentoUserVO(token);
+    public AjaxResult getinfo(HttpServletRequest request) {
+        System.out.println("信息获取"+request.getHeader("token"));
+        SysUserVo userVo = jwtUtils.getTokentoUserVO(request.getHeader("token"));
         return AjaxResult.success("token生成成功",userVo);
     }
 }

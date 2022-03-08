@@ -14,10 +14,15 @@ export function login(data) {
 
 
 export function getInfo(token) {
+  // return request({
+  //   url: '/vue-element-admin/user/info',
+  //   method: 'get',
+  //   params: { token }
+  // })
   return request({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
+    url: '/rabbit/system/post/getinfo',
+    method: 'post',
+    //params: { token }
   })
 }
 

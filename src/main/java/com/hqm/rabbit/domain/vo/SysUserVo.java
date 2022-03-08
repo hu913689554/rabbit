@@ -46,6 +46,19 @@ public class SysUserVo extends SysUser implements UserDetails {
         this.pagePath = pagePath;
     }
 
+
+    /**
+     * 用户角色
+     */
+    private Set<String> roles;
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
     /**
      * 用户权限
      */
@@ -157,6 +170,7 @@ public class SysUserVo extends SysUser implements UserDetails {
                 "Id='" + super.getId() + '\'' +
                 ", username='" + this.getUsername() + '\'' +
                 ", password='" + this.getPassword() + '\'' +
+                ", roles='" + getRoles() + '\'' +
                 ", loginTime=" + loginTime +
                 ", expireTime=" + expireTime +
                 ", token='" + token + '\'' +

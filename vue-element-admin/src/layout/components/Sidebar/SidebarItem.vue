@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
+      console.log("-------侧边栏")
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
@@ -78,7 +79,6 @@ export default {
         this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
         return true
       }
-
       return false
     },
     resolvePath(routePath) {
