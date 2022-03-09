@@ -57,7 +57,7 @@ const actions = {
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('getInfo:角色必须是非空数组！')
+          reject('getInfo:改用户角色为空')
         }
 
         commit('SET_ROLES', roles)

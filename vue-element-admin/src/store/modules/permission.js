@@ -1,4 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import { getMenu } from '@/api/user'
+import Layout from '@/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -34,6 +36,10 @@ export function filterAsyncRoutes(routes, roles) {
   return res
 }
 
+
+
+
+
 const state = {
   routes: [],
   addRoutes: []
@@ -42,19 +48,58 @@ const state = {
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
+    state.routes =  constantRoutes.concat(routes) //routes
   }
 }
 
+
+function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
+  const accessedRouters = asyncRouterMap.filter(route => {
+    if (route.component) {
+      if (route.component === 'Layout') {//Layout组件特殊处理
+        route.component = Layout
+      } else {
+        route.component = () =>import(route.component)
+      }
+    }
+    if (route.children && route.children.length) {
+      route.children = filterAsyncRouter(route.children)
+    }
+    return true
+  })
+
+  return accessedRouters
+}
+
+
+
 const actions = {
+
+
+  
   generateRoutes({ commit }, roles) {
+
+
     return new Promise(resolve => {
+      // getMenu().then(response => {
+      //   let accessedRoutes
+      //   accessedRoutes=filterAsyncRouter(response.data)
+      //   commit('SET_ROUTES', accessedRoutes)
+      //   resolve(accessedRoutes)
+      //   }).catch(error => {
+      //     console.log(error)
+      //   })
+     
+
+
       let accessedRoutes
       if (roles.includes('admin')) { 
         accessedRoutes = asyncRoutes || []
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
+      console.log("正确的")
+      console.log(asyncRoutes)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

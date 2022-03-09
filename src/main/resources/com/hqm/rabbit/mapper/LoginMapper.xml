@@ -18,10 +18,7 @@
     </select>
     <select id="selectUserFun"   parameterType="String" resultType="HashMap" >
         select funcode from sys_user_fun where username=#{username}
-        union
-        select b.funcode from sys_user_dept a inner join sys_dept_fun b on a.deptcode=b.deptcode where a.username=#{username}
-        union
-        select b.funcode from sys_user_role a inner join sys_role_fun b on a.rolecode=b.rolecode where a.username=#{username}
+
     </select>
     <select id="selectUserRole"   parameterType="String" resultType="HashMap" >
         select rolecode from sys_user_role where username=#{username}

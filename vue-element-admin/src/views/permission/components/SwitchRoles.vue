@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom:15px;">
-      Your roles: {{ roles }}
+      你的角色是: {{ roles }}
     </div>
     Switch roles:
     <el-radio-group v-model="switchRoles">

@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -91,7 +91,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        meta: { title: '文档', icon: 'documentation', affix: true }
       }
     ]
   },
@@ -104,7 +104,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
+        meta: { title: '指导', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -128,7 +128,7 @@ export const constantRoutes = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [
+export const  asyncRoutes = [
   {
     path: '/permission',
     component: Layout,
@@ -136,9 +136,9 @@ export const asyncRoutes = [
     alwaysShow: true, // 将始终显示根菜单
     name: 'Permission',
     meta: {
-      title: 'Permission',
+      title: '角色',
       icon: 'lock',
-      roles: ['admin', 'editor'] // 您可以在根导航中设置角色
+      //roles: ['admin', 'editor'] // 您可以在根导航中设置角色
     },
     children: [
       {
@@ -147,7 +147,7 @@ export const asyncRoutes = [
         name: 'PagePermission',
         meta: {
           title: 'Page Permission',
-          roles: ['admin'] // 或者只能在sub nav中设置角色
+          //roles: ['admin'] // 或者只能在sub nav中设置角色
         }
       },
       {
@@ -165,7 +165,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'Role Permission',
-          roles: ['admin']
+          //roles: ['admin']
         }
       }
     ]
@@ -179,7 +179,8 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/icons/index'),
         name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
+        meta: { title: '图标', icon: 'icon', noCache: true,roles: ['admin1222', 'editor2'] }
+        
       }
     ]
   },

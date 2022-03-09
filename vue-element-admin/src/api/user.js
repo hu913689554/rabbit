@@ -26,6 +26,20 @@ export function getInfo(token) {
   })
 }
 
+export function getMenu(token) {
+  // return request({
+  //   url: '/vue-element-admin/user/info',
+  //   method: 'get',
+  //   params: { token }
+  // })
+  return request({
+    url: '/rabbit/menuLogin',
+    method: 'post',
+    //params: { token }
+  })
+}
+
+
 export function logout() {
   return request({
     url: '/vue-element-admin/user/logout',
