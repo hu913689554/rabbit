@@ -41,6 +41,23 @@ router.beforeEach(async(to, from, next) => {
           // generate accessible routes map based on roles
 
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          console.log("正确的")
+      console.log(accessRoutes)
+      let i=0
+      accessRoutes.forEach(accessRoute=>{
+       
+        if(accessRoute.children&&accessRoute.children.length==1){
+          console.log(accessRoute)
+          // console.log("名称"+accessRoute.children.meta.title)
+          // console.log("图标"+accessRoute.children.meta.icon)
+          //console.log("地址"+accessRoute.path)
+          //console.log("是否缓存"+accessRoute.children.meta.noCache)
+          i++
+        }
+       
+        
+      })
+      console.log("一共"+i+"条")
           // const accessRoutes = asyncRoutes.concat(constantRoutes)
           // console.log("测试")
           // console.log(accessRoutes)

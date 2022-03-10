@@ -55,10 +55,15 @@ const mutations = {
 
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
+    console.log("开始注册组件")
+    console.log(route)
+
     if (route.component) {
       if (route.component === 'Layout') {//Layout组件特殊处理
+        console.log("注册Layout组件"+route.component)
         route.component = Layout
       } else {
+        const path = require('path')
         route.component = () =>import(route.component)
       }
     }
@@ -81,27 +86,30 @@ const actions = {
 
 
     return new Promise(resolve => {
-      // getMenu().then(response => {
-      //   let accessedRoutes
-      //   accessedRoutes=filterAsyncRouter(response.data)
-      //   commit('SET_ROUTES', accessedRoutes)
-      //   resolve(accessedRoutes)
-      //   }).catch(error => {
-      //     console.log(error)
-      //   })
+      getMenu().then(response => {
+        let accessedRoutes
+        accessedRoutes=filterAsyncRouter(response.data)
+        console.log("注册完成")
+        console.log(accessedRoutes)
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+        }).catch(error => {
+          console.log(error)
+        }) 
      
 
 
-      let accessedRoutes
-      if (roles.includes('admin')) { 
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      console.log("正确的")
-      console.log(asyncRoutes)
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      // let accessedRoutes
+      // if (roles.includes('admin')) { 
+      //   accessedRoutes = asyncRoutes || []
+      // } else {
+      //   accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      // }
+      
+  
+      // commit('SET_ROUTES', accessedRoutes)
+      
+      // resolve(accessedRoutes)
     })
   }
 }

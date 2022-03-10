@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hqm.rabbit.mapper.MenuMapper">
+
+    <select id="getUserMenu" parameterType="String" resultType="HashMap">
+      SELECT b.* FROM sys_user_fun a INNER JOIN sys_muen b ON a.funcode=b.menu_fun WHERE a.username='admin'
+        UNION
+      SELECT * FROM sys_muen WHERE IFNULL(menu_fun,'')=''
+    </select>
+    <!--    <select id="selectLogin" resultType="HashMap">-->
+    <!--        select * from sys_user-->
+    <!--    </select>-->
+    <!--    <select id="selecttongyong" parameterType="String" resultType="HashMap">-->
+    <!--         ${str}-->
+    <!--    </select>-->
+
+
+</mapper>
