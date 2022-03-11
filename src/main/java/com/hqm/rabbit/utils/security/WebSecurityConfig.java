@@ -1,6 +1,6 @@
 package com.hqm.rabbit.utils.security;
 
-import com.hqm.rabbit.utils.error.AuthenticationEntryPointImpl;
+//import com.hqm.rabbit.utils.error.AuthenticationEntryPointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 认证失败处理类
      */
-    @Autowired
-    private AuthenticationEntryPointImpl unauthorizedHandler;
-
+//    @Autowired
+//    private AuthenticationEntryPointImpl unauthorizedHandler;
+//
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 认证失败处理类
                 .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
+                //.authenticationEntryPoint(unauthorizedHandler)
                 .accessDeniedPage("/403")
                 //.accessDeniedHandler()
                 .and()
