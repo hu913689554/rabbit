@@ -19,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      //config.headers['X-Token'] = getToken()
+      // config.headers['X-Token'] = getToken()
       config.headers['token'] = getToken()
     }
     return config
@@ -49,18 +49,17 @@ service.interceptors.response.use(
 
     if (res.code == 0) {
       Message({
-        message: res.msg || 'Error-',
+        message: res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.msg || 'Error'))
     }
     if (res.code == 1) {
       return res
     }
 
-
-    if (res.code !== 20000  ) {
+    if (res.code !== 20000) {
       Message({
         message: res.message || 'Error',
         type: 'error',
@@ -82,7 +81,6 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-
       return res
     }
   },
@@ -98,7 +96,4 @@ service.interceptors.response.use(
 )
 
 export default service
-
-
-
 
