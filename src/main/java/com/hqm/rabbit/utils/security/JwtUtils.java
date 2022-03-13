@@ -1,6 +1,8 @@
 package com.hqm.rabbit.utils.security;
 
 import com.hqm.rabbit.domain.vo.SysUserVo;
+import com.hqm.rabbit.service.LoginService;
+import com.hqm.rabbit.service.UserService;
 import com.hqm.rabbit.utils.error.MsgException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,8 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -66,6 +67,9 @@ public class JwtUtils {
     @Autowired
     public RedisTemplate redisTemplate;
 
+    @Autowired
+    public static UserService userservice;
+
     /**
      * 加密生成token
      *
@@ -94,6 +98,7 @@ public class JwtUtils {
     public void refreshToken(SysUserVo uservo) {
         uservo.setLoginTime(System.currentTimeMillis());
         uservo.setExpireTime(uservo.getLoginTime() + expireTime * MILLIS_MINUTE);
+        uservo.setOnline(true);
         HashMap<String, SysUserVo> userMap = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
         if (userMap == null) {
             userMap = new HashMap<String, SysUserVo>();
@@ -169,6 +174,22 @@ public class JwtUtils {
             }
             return  username;
     }
+    /**
+     * 创建人 胡勤明
+     * 创建时间 2022/3/13 12:35
+     * 作用 获取当前在线对象集合
+     * 版本 1.0
+     */
+    public List<SysUserVo> getUserVoonlineList() {
+        HashMap<String, SysUserVo> onlineusername = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
+        ArrayList<SysUserVo> sysUserVos = new ArrayList<>();
+        for(String key:onlineusername.keySet()){
+            sysUserVos.add(onlineusername.get(key));
+        }
+        return  sysUserVos;
+    }
+
+
 
 
 }

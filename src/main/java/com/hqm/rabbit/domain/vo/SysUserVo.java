@@ -47,6 +47,16 @@ public class SysUserVo extends SysUser implements UserDetails {
     }
 
 
+    public Boolean online;
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
+    }
+
     /**
      * 用户角色
      */
@@ -168,6 +178,7 @@ public class SysUserVo extends SysUser implements UserDetails {
     public String toString() {
         return "UserVo{" +
                 "Id='" + super.getId() + '\'' +
+                "name='" + super.getName() + '\'' +
                 ", username='" + this.getUsername() + '\'' +
                 ", password='" + this.getPassword() + '\'' +
                 ", roles='" + getRoles() + '\'' +

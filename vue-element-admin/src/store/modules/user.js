@@ -1,4 +1,4 @@
-import { login, logout, getInfo,loginto } from '@/api/user'
+import { login, logout, getInfo, loginto } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -7,10 +7,14 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
+  usernmae: '',
   roles: []
 }
 
 const mutations = {
+  SET_Username: (state, username) => {
+    state.username = username
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -53,13 +57,13 @@ const actions = {
           reject('getInfo:验证失败，请重新登录。')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { username, roles, name, avatar, introduction } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo:改用户角色为空')
         }
-
+        commit('SET_Username', username)
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

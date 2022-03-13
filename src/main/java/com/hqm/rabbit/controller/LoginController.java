@@ -1,7 +1,6 @@
 package com.hqm.rabbit.controller;
 
-import com.hqm.rabbit.domain.entity.SysUser;
-import com.hqm.rabbit.utils.error.MsgException;
+
 import com.hqm.rabbit.utils.security.JwtUtils;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.service.LoginService;

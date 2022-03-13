@@ -1,5 +1,4 @@
 package com.hqm.rabbit.service;
-import com.hqm.rabbit.domain.entity.SysUser;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.utils.error.MsgException;
 import com.hqm.rabbit.utils.security.JwtUtils;
@@ -62,6 +61,7 @@ public class LoginService implements UserDetailsService {
        System.out.println("账号查询验证");
        System.out.println(username);
        SysUserVo userVo = SysLoginMapper.selectLogininfo(username);
+       System.out.println(userVo);
        List<Map<String, String>> listFun = SysLoginMapper.selectUserFun(username);
        List<Map<String, String>> listRole = SysLoginMapper.selectUserRole(username);
        Set<String> setFuns=new HashSet();

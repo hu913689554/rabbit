@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hqm.rabbit.mapper.ChatMapper">
+
+
+    <select id="selectChat"  parameterType="String" resultType="com.hqm.rabbit.domain.entity.SysChat">
+        select * from sys_chat where (cfrom=#{cfrom} and cto=#{cto}) or (cfrom=#{cto} and cto=#{cfrom})order by ddatetime
+    </select>
+    <insert id="addChat" parameterType="com.hqm.rabbit.domain.entity.SysChat" >
+        insert into sys_chat(cfrom, cto, ctext,ddatetime) values(#{cfrom}, #{cto}, #{ctext}, now())
+    </insert>
+<!--    <select id="selectLogin" resultType="HashMap">-->
+<!--        select * from sys_user-->
+<!--    </select>-->
+<!--    <select id="selecttongyong" parameterType="String" resultType="HashMap">-->
+<!--         ${str}-->
+<!--    </select>-->
+
+
+</mapper>
