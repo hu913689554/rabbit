@@ -1,6 +1,7 @@
 package com.hqm.rabbit.service;
 import com.hqm.rabbit.domain.entity.SysUser;
 import com.hqm.rabbit.domain.vo.SysUserVo;
+import com.hqm.rabbit.utils.error.MsgException;
 import com.hqm.rabbit.utils.security.JwtUtils;
 import com.hqm.rabbit.mapper.LoginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class LoginService implements UserDetailsService {
         }
         catch (RuntimeException e)
         {
-            throw new RuntimeException("账号或密码错误");
+            throw new MsgException("账号或密码错误");
         }
         SysUserVo loginUser = (SysUserVo) authentication.getPrincipal();
         System.out.println("登录返回"+loginUser);

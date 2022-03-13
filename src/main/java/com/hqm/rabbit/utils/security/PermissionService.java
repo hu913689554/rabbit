@@ -30,7 +30,7 @@ public class PermissionService {
         if(permissions.contains(permission)){
             return true;
         }else{
-            //throw  new MsgException("权限验证失败！");
+           // throw  new MsgException("权限验证失败！");
            return false;
         }
 

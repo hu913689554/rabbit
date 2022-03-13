@@ -1,6 +1,7 @@
 package com.hqm.rabbit.utils.security;
 
 import com.hqm.rabbit.domain.vo.SysUserVo;
+import com.hqm.rabbit.utils.error.MsgException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -92,7 +94,14 @@ public class JwtUtils {
     public void refreshToken(SysUserVo uservo) {
         uservo.setLoginTime(System.currentTimeMillis());
         uservo.setExpireTime(uservo.getLoginTime() + expireTime * MILLIS_MINUTE);
-        redisTemplate.opsForValue().set("id" + uservo.getUsername(), uservo, expireTime, TimeUnit.MINUTES);
+        HashMap<String, SysUserVo> userMap = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
+        if (userMap == null) {
+            userMap = new HashMap<String, SysUserVo>();
+
+        }
+        userMap.put("id" + uservo.getUsername(), uservo);
+        redisTemplate.opsForValue().set("onlineusername", userMap, expireTime, TimeUnit.MINUTES);
+        //redisTemplate.opsForValue().set("id" + uservo.getUsername(), uservo, expireTime, TimeUnit.MINUTES);
         System.out.println("redis已经刷新");
     }
 
@@ -133,7 +142,7 @@ public class JwtUtils {
      * 作用 通过请求获取token
      * 版本 1.0
      */
-    public SysUserVo getToken(HttpServletRequest request) {
+    public SysUserVo getToken(HttpServletRequest request){
         String token = request.getHeader(header);
         if (token != null && !"".equals(token)) {
             return getTokentoUserVO(token);
@@ -149,13 +158,16 @@ public class JwtUtils {
      * 版本 1.0
      */
     public SysUserVo getTokentoUserVO(String token) {
-        try {
             Claims claims = gettoekntoclaims(token);
-            Object username = redisTemplate.opsForValue().get("id" + claims.get("username"));
-            return (SysUserVo)username;
-        } catch (Exception e) {
-            throw new RuntimeException("未获取到登录信息,请重新登录");
-        }
+            HashMap<String, SysUserVo> onlineusername = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
+            if (onlineusername == null) {
+                throw new MsgException("未获取到登录信息,请重新登录");
+            }
+            SysUserVo username = (SysUserVo)onlineusername.get("id" + claims.get("username"));
+            if(username==null){
+                throw new MsgException("未获取到登录信息,请重新登录");
+            }
+            return  username;
     }
 
 

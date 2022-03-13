@@ -17,6 +17,7 @@
         :key="child.path"
         :is-nest="true"
         :item="child"
+        
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
@@ -58,7 +59,6 @@ export default {
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
-      console.log("-------侧边栏")
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false

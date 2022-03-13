@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 
 import com.hqm.rabbit.domain.vo.SysUserVo;
+import com.hqm.rabbit.utils.error.MsgException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +49,12 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("过滤开始");
 
-        SysUserVo userVo = jwtUtils.getToken(httpServletRequest);
+        SysUserVo userVo = null;
+        try {
+            userVo = jwtUtils.getToken(httpServletRequest);
+        } catch (MsgException e) {
+            e.printStackTrace();
+        }
         if (userVo != null) {
 
             try {

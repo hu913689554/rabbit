@@ -1,5 +1,6 @@
 package com.hqm.rabbit.mapper;
 
+import com.hqm.rabbit.domain.entity.SysMuen;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,6 +21,7 @@ public interface MenuMapper {
      * 方法作用 查询权限
      */
     public List<Map<String,Object>> getUserMenu(String username);
+    public List<SysMuen> getUserMenus(String username);
 
 
 }

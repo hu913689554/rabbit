@@ -1,5 +1,6 @@
 package com.hqm.rabbit.service;
 
+import com.hqm.rabbit.domain.entity.SysMuen;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.mapper.LoginMapper;
 import com.hqm.rabbit.mapper.MenuMapper;
@@ -29,31 +30,37 @@ public class MenuService {
     MenuMapper menumapper;
 
     public List<Map<String, Object>> getUserMenu(String getUsername) {
-        List<Map<String, Object>> userMenuList = menumapper.getUserMenu(getUsername);
+        List<SysMuen> userMenuList = menumapper.getUserMenus(getUsername);
+        //List<Map<String, Object>> userMenuList = menumapper.getUserMenu(getUsername);
         ArrayList Toplist = new ArrayList();
         LinkedList<Map<String, Object>> LinkedList = new LinkedList<Map<String, Object>>();
         LinkedHashMap<String, Map<String, Object>> LinkedHashMap = new LinkedHashMap<String, Map<String, Object>>();
         //构建菜单树
-        for (Map<String, Object> userMenuMap : userMenuList) {
+        for (SysMuen userMenuMap : userMenuList) {
             LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-            map.put("path", "/" + userMenuMap.get("menu_top_code"));
-            if(userMenuMap.get("menu_path")==null||"".equals(userMenuMap.get("menu_path"))){
-                map.put("component", "Layout");
-            }else{
-                map.put("component", userMenuMap.get("menu_path"));
-            }
+            map.put("path", userMenuMap.getMenuCode());
+            map.put("component", userMenuMap.getMenuPath()==null?"Layout":userMenuMap.getMenuPath());
             LinkedList childrenList = new LinkedList();
+
+
             LinkedHashMap<String, Object> metaMap = new LinkedHashMap<String, Object>();
-            metaMap.put("title", userMenuMap.get("menu_name"));
-            metaMap.put("icon", userMenuMap.get("icon"));
-            metaMap.put("affix", true);
-            //是否末级，末级直接将菜单信息添加至自身
-            if ((Boolean) userMenuMap.get("menu_last") && (Integer) userMenuMap.get("menu_parent") == 0) {
-                LinkedHashMap<String, Object> childrenMap = new LinkedHashMap<String, Object>();
+            metaMap.put("title", userMenuMap.getMenuName());
+            metaMap.put("icon", userMenuMap.getIcon());
+            metaMap.put("affix", userMenuMap.getAffix());
+            metaMap.put("hidden", userMenuMap.getNoCache());
+
+
+            if(userMenuMap.getMenuParent() == 0){
+                map.put("path", "/" + userMenuMap.getMenuTopCode());
                 map.put("component", "Layout");
-                childrenMap.put("path", userMenuMap.get("menu_code"));
-                childrenMap.put("component", userMenuMap.get("menu_path"));
-                childrenMap.put("name", "Documentation");//userMenuMap.get("menu_name")
+                LinkedList.add(map);
+            }
+            //是否末级，末级直接将菜单信息添加至自身
+            if ( userMenuMap.getMenuParent() == 0 && userMenuMap.getMenuLast()) {
+                LinkedHashMap<String, Object> childrenMap = new LinkedHashMap<String, Object>();
+                childrenMap.put("path", userMenuMap.getMenuCode());
+                childrenMap.put("name", userMenuMap.getMenuCode());
+                childrenMap.put("component", userMenuMap.getMenuPath());
                 childrenMap.put("meta", metaMap);
                 childrenList.add(childrenMap);
                 map.put("children", childrenList);
@@ -62,28 +69,25 @@ public class MenuService {
                 map.put("meta", metaMap);
                 map.put("children", childrenList);
             }
-            LinkedHashMap.put((String) userMenuMap.get("menu_code"), map);
-            if ((Integer) userMenuMap.get("menu_parent") == 0) {
-                LinkedList.add(map);
-            }
+            LinkedHashMap.put((String) userMenuMap.getMenuCode(), map);
         }
-        for (Map<String, Object> userMenuMap : userMenuList) {
-            if ((Integer) userMenuMap.get("menu_parent") != 0) {
-                Map<String, Object> menu_top_code = LinkedHashMap.get((String) userMenuMap.get("menu_top_code"));
-                Map<String, Object> menu_code = LinkedHashMap.get((String) userMenuMap.get("menu_code"));
+        for (SysMuen userMenuMap : userMenuList) {
+            if (userMenuMap.getMenuParent() != 0) {
+                Map<String, Object> menu_top_code = LinkedHashMap.get((String) userMenuMap.getMenuTopCode());
+                Map<String, Object> menu_code = LinkedHashMap.get((String) userMenuMap.getMenuCode());
                 LinkedList children = (LinkedList) menu_top_code.get("children");
                 children.add(menu_code);
             }
         }
-        for (String key: LinkedHashMap.keySet()) {
-            Map<String, Object> userMenuMap=LinkedHashMap.get(key);
-            if (userMenuMap.get("children") != null ) {
-                LinkedList children = (LinkedList) userMenuMap.get("children");
-                if(children==null||children.size()==0){
-                    userMenuMap.remove("children");
-                }
-            }
-        }
+//        for (String key: LinkedHashMap.keySet()) {
+//            Map<String, Object> userMenuMap=LinkedHashMap.get(key);
+//            if (userMenuMap.get("children") != null ) {
+//                LinkedList children = (LinkedList) userMenuMap.get("children");
+//                if(children==null||children.size()==0){
+//                    userMenuMap.remove("children");
+//                }
+//            }
+//        }
         return LinkedList;
     }
 }

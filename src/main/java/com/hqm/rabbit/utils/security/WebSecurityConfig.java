@@ -1,6 +1,6 @@
 package com.hqm.rabbit.utils.security;
 
-//import com.hqm.rabbit.utils.error.AuthenticationEntryPointImpl;
+import com.hqm.rabbit.utils.error.AuthenticationEntryPointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 认证失败处理类
      */
-//    @Autowired
-//    private AuthenticationEntryPointImpl unauthorizedHandler;
-//
+    @Autowired
+    private AuthenticationEntryPointImpl unauthorizedHandler;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,15 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()//开启跨域
                 .and()
                 // 认证失败处理类
-                .exceptionHandling()
-                //.authenticationEntryPoint(unauthorizedHandler)
+                .exceptionHandling() .authenticationEntryPoint(unauthorizedHandler)
                 .accessDeniedPage("/403")
                 //.accessDeniedHandler()
                 .and()
                 //开启授权请求
                 .authorizeRequests()
                 //放行接口，因为使用自定义登录页面所以需要放行
-                .antMatchers("/**/userinfo","/**/getLogin","/**/postLogin","/**/swagger-ui/**/","/**/doc.html","/swagger-ui.html").permitAll()
+                .antMatchers("/**/imserver/**","/imserver/**","/**/userinfo","/**/getLogin","/**/postLogin","/**/swagger-ui/**/","/**/doc.html","/swagger-ui.html").permitAll()
                 //设置页面权限
                 //.antMatchers("/menuLogin").hasAuthority("p2")
                 //拦截所有请求，所有请求都需要登录认证

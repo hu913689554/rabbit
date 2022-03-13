@@ -5,9 +5,14 @@
 <mapper namespace="com.hqm.rabbit.mapper.MenuMapper">
 
     <select id="getUserMenu" parameterType="String" resultType="HashMap">
-      SELECT b.* FROM sys_user_fun a INNER JOIN sys_muen b ON a.funcode=b.menu_fun WHERE a.username='admin'
+      SELECT b.* FROM sys_user_fun a INNER JOIN sys_muen b ON a.funcode=b.menufun WHERE a.username=#{username}
         UNION
-      SELECT * FROM sys_muen WHERE IFNULL(menu_fun,'')=''
+      SELECT * FROM sys_muen WHERE IFNULL(menufun,'')=''
+    </select>
+    <select id="getUserMenus" parameterType="String" resultType="com.hqm.rabbit.domain.entity.SysMuen">
+      SELECT b.* FROM sys_user_fun a INNER JOIN sys_muen b ON a.funcode=b.menufun WHERE a.username=#{username}
+        UNION
+      SELECT * FROM sys_muen WHERE IFNULL(menufun,'')=''
     </select>
     <!--    <select id="selectLogin" resultType="HashMap">-->
     <!--        select * from sys_user-->

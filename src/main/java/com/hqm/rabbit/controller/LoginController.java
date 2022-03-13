@@ -1,6 +1,7 @@
 package com.hqm.rabbit.controller;
 
 import com.hqm.rabbit.domain.entity.SysUser;
+import com.hqm.rabbit.utils.error.MsgException;
 import com.hqm.rabbit.utils.security.JwtUtils;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.service.LoginService;
@@ -53,6 +54,7 @@ public class     LoginController {
             return AjaxResult.error("账号或密码不能为空");
         }
         String token=loginService.login(UserVo);
+
         HashMap<String, String> stringStringHashMap = new HashMap<String, String>();
         stringStringHashMap.put("token",token);
         System.out.println("token返回成功"+token);
@@ -61,7 +63,7 @@ public class     LoginController {
 
 
     @PostMapping("/getinfo")
-    public AjaxResult getinfo(HttpServletRequest request) {
+    public AjaxResult getinfo(HttpServletRequest request)  {
         System.out.println("信息获取"+request.getHeader("token"));
         SysUserVo userVo = jwtUtils.getTokentoUserVO(request.getHeader("token"));
         return AjaxResult.success("token生成成功",userVo);
