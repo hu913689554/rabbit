@@ -27,7 +27,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler(RuntimeException.class)
     public AjaxResult handleRuntimeException(RuntimeException e, HttpServletRequest request)
     {
-        //e.printStackTrace();
+        e.printStackTrace();
         String requestURI = request.getRequestURI();
         return AjaxResult.error("拦截未知的运行时异常:"+e.getMessage());
     }
@@ -38,6 +38,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler(MsgException.class)
     public AjaxResult MsgException(MsgException e, HttpServletRequest request)
     {
+        e.printStackTrace();
         String requestURI = request.getRequestURI();
         return AjaxResult.error("自定义错误:"+e.getMessage());
     }
@@ -48,6 +49,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler(Exception.class)
     public AjaxResult handleException(Exception e, HttpServletRequest request)
     {
+        e.printStackTrace();
         String requestURI = request.getRequestURI();
         return AjaxResult.error("系统错误:"+e.getMessage());
     }

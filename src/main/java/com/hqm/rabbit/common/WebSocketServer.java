@@ -1,19 +1,16 @@
 package com.hqm.rabbit.common;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hqm.rabbit.domain.entity.SysChat;
 import com.hqm.rabbit.domain.vo.SysUserVo;
 import com.hqm.rabbit.mapper.ChatMapper;
-import com.hqm.rabbit.mapper.LoginMapper;
 import com.hqm.rabbit.service.UserService;
 import com.hqm.rabbit.utils.security.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -22,13 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import com.hqm.rabbit.mapper.LoginMapper;
-
 
 /**
  * @author websocket服务
  */
-
 @ServerEndpoint(value = "/imserver/{username}")
 @Component
 public class WebSocketServer {
@@ -56,19 +50,18 @@ public class WebSocketServer {
         HashMap<String, List<SysUserVo>> stringListHashMap = new HashMap<>();
         List<SysUserVo> sysUserVosList = userservice.selectUserVo();
         List<SysUserVo> userVoonlineList = jwtutils.getUserVoonlineList();
-        for(SysUserVo SysUserVo :sysUserVosList){
-            Boolean isbiaoshi=false;
-            for(SysUserVo SysUseronLineVo :userVoonlineList){
-                if(SysUserVo.getUsername().equals(SysUseronLineVo.getUsername())){
-                    isbiaoshi=true;
+        for (SysUserVo SysUserVo : sysUserVosList) {
+            Boolean isbiaoshi = false;
+            for (SysUserVo SysUseronLineVo : userVoonlineList) {
+                if (SysUserVo.getUsername().equals(SysUseronLineVo.getUsername())) {
+                    isbiaoshi = true;
                 }
             }
-            if(!isbiaoshi){
+            if (!isbiaoshi) {
                 userVoonlineList.add(SysUserVo);
             }
         }
-
-        stringListHashMap.put("usernamelist",userVoonlineList);
+        stringListHashMap.put("usernamelist", userVoonlineList);
         String str = JSON.toJSONString(stringListHashMap); // List转json
         sessionMap.put(username, session);
         log.info("有新用户加入，username={}, 当前在线人数为：{}", username, userVoonlineList.size());
@@ -76,15 +69,15 @@ public class WebSocketServer {
 //        JSONObject result = new JSONObject();
 //        JSONArray array = new JSONArray();
 //        result.put("users", array);
-////        result.put("state", array);
-////        result.put("users", array);
+//        result.put("state", array);
+//        result.put("users", array);
 //        for (Object key : sessionMap.keySet()) {
 //            JSONObject jsonObject = new JSONObject();
 //            jsonObject.put("username", key);
-//            // {"username", "zhang", "username": "admin"}
+//             {"username", "zhang", "username": "admin"}
 //            array.add(jsonObject);
 //        }
-    ////        {"users": [{"username": "zhang"},{ "username": "admin"}]}
+//                {"users": [{"username": "zhang"},{ "username": "admin"}]}
         sendAllMessage(str);  // 后台发送消息给所有的客户端
     }
 
@@ -102,6 +95,7 @@ public class WebSocketServer {
      * 后台收到客户端发送过来的消息
      * onMessage 是一个消息的中转站
      * 接受 浏览器端 socket.send 发送过来的 json数据
+     *
      * @param message 客户端发送过来的消息
      */
     @OnMessage
@@ -167,5 +161,4 @@ public class WebSocketServer {
             log.error("服务端发送消息给客户端失败", e);
         }
     }
-
 }

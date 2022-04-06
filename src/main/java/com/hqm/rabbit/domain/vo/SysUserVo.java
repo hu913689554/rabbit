@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * @时间 2022-01-05 16:49
  * @版本 1.0
  */
-public class SysUserVo extends SysUser implements UserDetails {
+public class SysUserVo extends SysUser implements UserDetails, Serializable {
 
 
 
@@ -164,17 +165,24 @@ public class SysUserVo extends SysUser implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-    /**
-     * 创建人 胡勤明
-     * 创建时间 2022/1/12 13:34
-     * 方法作用 是否停用
-     */
+
     @Override
     public boolean isEnabled() {
         return true;
     }
 
-    @Override
+    /**
+     * 创建人 胡勤明
+     * 创建时间 2022/1/12 13:34
+     * 方法作用 是否停用
+     */
+
+
+
+
+
+
+        @Override
     public String toString() {
         return "UserVo{" +
                 "Id='" + super.getId() + '\'' +
@@ -182,6 +190,7 @@ public class SysUserVo extends SysUser implements UserDetails {
                 ", username='" + this.getUsername() + '\'' +
                 ", password='" + this.getPassword() + '\'' +
                 ", roles='" + getRoles() + '\'' +
+                ", isEnabled='" + isEnabled() + '\'' +
                 ", loginTime=" + loginTime +
                 ", expireTime=" + expireTime +
                 ", token='" + token + '\'' +

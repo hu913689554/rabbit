@@ -43,7 +43,6 @@ public class MenuController {
         SysUserVo tokentoUserVO = jwtutils.getTokentoUserVO(request.getHeader("token"));
         List<Map<String, Object>> tokenList = menuService.getUserMenu(tokentoUserVO.getUsername());
         return AjaxResult.success("菜单查询成功",tokenList);
-
 //
 //        ArrayList list=new ArrayList();
 //        LinkedHashMap<String,Object> map=new LinkedHashMap<String,Object>();
@@ -82,7 +81,6 @@ public class MenuController {
     //@PreAuthorize("@ss.hasPermi(\"p12\")")
 
     public AjaxResult getUserRoutes(SysMuen sysMuen) {
-
         return new AjaxResult(1, "菜单查询完成");
     }
 

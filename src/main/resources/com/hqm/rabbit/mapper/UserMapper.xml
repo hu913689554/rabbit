@@ -14,7 +14,11 @@
     <select id="selectUserVo"   resultType="com.hqm.rabbit.domain.vo.SysUserVo">
         select * from sys_user
     </select>
-    <insert id="inserUser"  parameterType="List">
+    <insert id="inserUser"  parameterType="com.hqm.rabbit.domain.vo.SysUserVo">
+        insert into sys_user(username,password,name,introduction,avatar,isEnabled,createuser,createusername,updateuser,updateusername,createdate,updatedate)
+         values(#{username},#{password},#{name},#{introduction},#{avatar},#{isEnabled},#{createuser},#{createusername},#{updateuser},#{updateusername},#{createdate},#{updatedate})
+    </insert>
+    <insert id="inserUserList"  parameterType="List">
         insert into sys_user(username,password) values
         <foreach collection="sysUserList" item="sysuser" separator=",">
         (#{sysuser.username},#{sysuser.password})

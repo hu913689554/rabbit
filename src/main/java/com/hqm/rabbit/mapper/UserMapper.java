@@ -19,6 +19,6 @@ public interface UserMapper {
      * 方法作用 查询返回登陆信息 传入多个参数
      */
     public List<SysUserVo> selectUserVo();
-    public int inserUser(List<SysUserVo> sysUserList);
-
+    public int inserUser(SysUserVo sysUserList);
+    public int inserUserList(List<SysUserVo> sysUserList);
 }

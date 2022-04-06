@@ -38,11 +38,11 @@ module.exports = {
     },
     proxy: {
       '/rabbit': {
-        target: 'http://127.0.0.1:8081/',
+        target: 'http://127.0.0.1:8081',
         changeOrigin:true,
         pathRewrite:{
           ['^'+process.env.VUE_APP_BASE_API+'/rabbit']:'',
-         ['^'+process.env.VUE_APP_BASE_API]:''
+          ['^'+process.env.VUE_APP_BASE_API]:''
         }
       }
     },

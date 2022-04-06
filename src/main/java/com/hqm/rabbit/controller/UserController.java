@@ -19,24 +19,20 @@ public class UserController {
     @Autowired
     UserService UserService;
 
-    @GetMapping("/getuser")
-    public AjaxResult getUser(int pageNum,int pagesize){
+    @GetMapping("/getuserlist")
+    public AjaxResult getUserList(int pageNum,int pagesize){
         PageHelper.startPage(pageNum,pagesize);
         List<SysUserVo> sysUsers = UserService.selectUserVo();
         PageInfo pageInfo = new PageInfo(sysUsers);
         return new AjaxResult(1,"用户查询成功",pageInfo);
     }
 
+
+
     @PostMapping("/inseruser")
-    public AjaxResult inserUser(){
-        List<SysUserVo> list=new ArrayList();
-        for (int i=2000;i<2500;i++){
-            SysUserVo sysUser = new SysUserVo();
-            sysUser.setUsername(i+"");
-            sysUser.setPassword("aaaaaaaaaaa");
-            list.add(sysUser);
-        }
-        int i = UserService.insertUser(list);
+    public AjaxResult inserUser(@RequestBody SysUserVo UserVo){
+        System.out.println(UserVo);
+        int i = UserService.insertUser(UserVo);
         return new AjaxResult(1,"添加成功",i);
     }
 }

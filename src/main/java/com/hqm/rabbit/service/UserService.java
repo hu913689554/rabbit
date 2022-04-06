@@ -25,7 +25,7 @@ public class UserService {
         return sysUsers;
     }
 
-    public int insertUser(List<SysUserVo> sysUserList){
+    public int insertUser(SysUserVo sysUserList){
         int i = UserMapper.inserUser(sysUserList);
         return i;
     }

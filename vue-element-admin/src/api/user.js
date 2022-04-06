@@ -11,8 +11,6 @@ export function login(data) {
   })
 }
 
-
-
 export function getInfo(token) {
   // return request({
   //   url: '/vue-element-admin/user/info',
@@ -21,8 +19,8 @@ export function getInfo(token) {
   // })
   return request({
     url: '/rabbit/system/post/getinfo',
-    method: 'post',
-    //params: { token }
+    method: 'post'
+    // params: { token }
   })
 }
 
@@ -34,11 +32,40 @@ export function getMenu(token) {
   // })
   return request({
     url: '/rabbit/menuLogin',
-    method: 'post',
-    //params: { token }
+    method: 'post'
+    // params: { token }
   })
 }
 
+export function getUserList(data) {
+  // return request({
+  //   url: '/vue-element-admin/user/info',
+  //   method: 'get',
+  //   params: { token }
+  // })
+  return request({
+    url: '/rabbit/user/getuserlist', // ?pageNum='+data.pageNum+'&pagesize='+data.pagesize,
+    method: 'get',
+    params: data
+    // params: { token }
+
+  })
+}
+
+export function postInsertUser(data) {
+  // return request({
+  //   url: '/vue-element-admin/user/info',
+  //   method: 'get',
+  //   params: { token }
+  // })
+  return request({
+    url: '/rabbit/user/inseruser', // ?pageNum='+data.pageNum+'&pagesize='+data.pagesize,
+    method: 'post',
+    data
+    // params: { token }
+
+  })
+}
 
 export function logout() {
   return request({

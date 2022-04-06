@@ -1,9 +1,9 @@
 package com.hqm.rabbit.domain.entity;
 
 
-import java.io.Serializable;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
-public class SysUser implements Serializable {
+public class SysUser {
 
   private long id;
   private String name;
@@ -11,6 +11,13 @@ public class SysUser implements Serializable {
   private String password;
   private String introduction;
   private String avatar;
+  private Boolean isenabled;
+  private String createuser;
+  private String createusername;
+  private String updateuser;
+  private String updateusername;
+  private java.sql.Timestamp createdate;
+  private java.sql.Timestamp updatedate;
 
 
   public long getId() {
@@ -64,6 +71,69 @@ public class SysUser implements Serializable {
 
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+
+  public Boolean getisEnabled() {
+    return isenabled;
+  }
+
+  public void setEnabled(Boolean isenabled) {
+    this.isenabled = isenabled;
+  }
+
+
+  public String getCreateuser() {
+    return createuser;
+  }
+
+  public void setCreateuser(String createuser) {
+    this.createuser = createuser;
+  }
+
+
+  public String getCreateusername() {
+    return createusername;
+  }
+
+  public void setCreateusername(String createusername) {
+    this.createusername = createusername;
+  }
+
+
+  public String getUpdateuser() {
+    return updateuser;
+  }
+
+  public void setUpdateuser(String updateuser) {
+    this.updateuser = updateuser;
+  }
+
+
+  public String getUpdateusername() {
+    return updateusername;
+  }
+
+  public void setUpdateusername(String updateusername) {
+    this.updateusername = updateusername;
+  }
+
+
+  public java.sql.Timestamp getCreatedate() {
+    return createdate;
+  }
+
+  public void setCreatedate(java.sql.Timestamp createdate) {
+    this.createdate = createdate;
+  }
+
+
+  public java.sql.Timestamp getUpdatedate() {
+    return updatedate;
+  }
+
+  public void setUpdatedate(java.sql.Timestamp updatedate) {
+    this.updatedate = updatedate;
   }
 
 }

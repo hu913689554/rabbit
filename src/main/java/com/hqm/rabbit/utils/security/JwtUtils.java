@@ -99,10 +99,13 @@ public class JwtUtils {
         uservo.setLoginTime(System.currentTimeMillis());
         uservo.setExpireTime(uservo.getLoginTime() + expireTime * MILLIS_MINUTE);
         uservo.setOnline(true);
-        HashMap<String, SysUserVo> userMap = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
-        if (userMap == null) {
-            userMap = new HashMap<String, SysUserVo>();
 
+        Boolean onlineusername = redisTemplate.hasKey("onlineusername");
+        HashMap<String, SysUserVo> userMap = null;
+        if (!onlineusername) {
+            userMap = new HashMap<String, SysUserVo>();
+        }else{
+            userMap = (HashMap<String, SysUserVo>) redisTemplate.opsForValue().get("onlineusername");
         }
         userMap.put("id" + uservo.getUsername(), uservo);
         redisTemplate.opsForValue().set("onlineusername", userMap, expireTime, TimeUnit.MINUTES);

@@ -36,6 +36,8 @@ public class LoginService implements UserDetailsService {
     private AuthenticationManager authenticationManager;
 
     public String login(SysUserVo UserVo){
+        System.out.println("-------------------");
+        System.out.println(UserVo);
         //生成token
         String token=null;
         // 用户验证

@@ -48,7 +48,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("过滤开始");
-
         SysUserVo userVo = null;
         try {
             userVo = jwtUtils.getToken(httpServletRequest);
@@ -56,15 +55,11 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             e.printStackTrace();
         }
         if (userVo != null) {
-
             try {
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userVo, null, userVo.getAuthorities());
-
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
 //                SecurityContextHolder
 //                        .getContext()
 //                        .setAuthentication(new UsernamePasswordAuthenticationToken(userVo.getUsername(), userVo.getPassword()));

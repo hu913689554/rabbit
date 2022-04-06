@@ -26,10 +26,8 @@ import java.util.List;
 @RequestMapping("/system/chat")
 public class ChatController {
 
-
     @Autowired
     public ChatService chatService;
-
 
     @PostMapping("/getUserChat")
     public AjaxResult getUserChat(@RequestBody SysChat syschat)  {

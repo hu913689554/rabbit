@@ -51,16 +51,12 @@ export const loadView = (view) => { // 路由懒加载
 }
 function filterAsyncRouter(asyncRouterMap) { // 遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
-    console.log('开始注册组件')
-    console.log(route)
     if (route.component) {
       if (route.component === 'Layout') { // Layout组件特殊处理
-        console.log('注册Layout组件' + route.component)
         route.component = Layout
       } else {
-        console.log('注册自定义组件' + route.component)
-        //route.component = () => import(str)
-        route.component=loadView(route.component)
+        // route.component = () => import(str)
+        route.component = loadView(route.component)
       }
     }
     if (route.children && route.children.length) {
@@ -79,8 +75,6 @@ const actions = {
       getMenu().then(response => {
         let accessedRoutes
         accessedRoutes = filterAsyncRouter(response.data)
-        console.log('注册完成')
-        console.log(accessedRoutes)
         commit('SET_ROUTES', accessedRoutes)
         resolve(accessedRoutes)
       }).catch(error => {
